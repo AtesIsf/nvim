@@ -1,0 +1,14 @@
+local call = vim.call
+local cmd = vim.cmd
+local Plug = vim.fn['plug#']
+local PATH = "~/.config/nvim/autoload/plugged" --You can use any PATH which you prefer
+
+call('plug#begin', PATH)
+	Plug 'navarasu/onedark.nvim'
+	Plug 'neoclide/coc.nvim', { 'branch': 'master', 'do': 'npm ci' }
+	Plug 'preservim/nerdtree'
+	Plug 'ryanoasis/vim-devicons'
+	Plug 'vim-airline/vim-airline'
+	Plug 'nvim-lua/plenary.nvim',
+	Plug 'MunifTanjim/nui.nvim',
+call'plug#end'
