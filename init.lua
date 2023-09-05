@@ -17,10 +17,6 @@ require('packer').startup(function()
   	}
 	use {'neoclide/coc.nvim', branch = 'release'}
 	use 'feline-nvim/feline.nvim'
-	use {
-  		"startup-nvim/startup.nvim",
-  		requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
-	}
 end)
 
 require('onedark').load()
@@ -33,8 +29,6 @@ require('neo-tree').setup {
     		},
 	}
 }
-require('feline').setup()
-require("startup").setup()
 
 -- Your general Neovim settings
 vim.cmd [[
