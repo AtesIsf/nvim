@@ -5,7 +5,6 @@ local fn = vim.fn
 
 -- Initialize packer.nvim
 require('packer').startup(function()
-	use 'navarasu/onedark.nvim'
 	use {
   		"nvim-neo-tree/neo-tree.nvim",
     	branch = "v3.x",
@@ -16,10 +15,10 @@ require('packer').startup(function()
     	}
   	}
 	use {'neoclide/coc.nvim', branch = 'release'}
-	use 'feline-nvim/feline.nvim'
+	use "vim-airline/vim-airline"
+	use "morhetz/gruvbox"
 end)
 
-require('onedark').load()
 require('neo-tree').setup {
 	filesystem = {
     		filtered_items = {
@@ -30,17 +29,19 @@ require('neo-tree').setup {
 	}
 }
 
+vim.cmd.colorscheme("gruvbox")
+
 -- Your general Neovim settings
 vim.cmd [[
-  set number
-  set relativenumber
-  set tabstop=4
-  set shiftwidth=4
-  set encoding=utf-8
-  set nobackup
-  set nowritebackup
-  set updatetime=300
-  set signcolumn=yes
+  	set number
+  	set relativenumber
+  	set tabstop=4
+  	set shiftwidth=4
+  	set encoding=utf-8
+  	set nobackup
+  	set nowritebackup
+  	set updatetime=300
+  	set signcolumn=yes
 ]]
 
 -- COC STUFF FROM HERE
