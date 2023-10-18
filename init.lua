@@ -5,6 +5,7 @@ local fn = vim.fn
 
 -- Initialize packer.nvim
 require('packer').startup(function()
+    use "wbthomason/packer.nvim"
 	use {
   		"nvim-neo-tree/neo-tree.nvim",
     	branch = "v3.x",
