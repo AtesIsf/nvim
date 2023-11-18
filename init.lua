@@ -5,7 +5,7 @@ local fn = vim.fn
 
 -- Initialize packer.nvim
 require('packer').startup(function()
-    use "wbthomason/packer.nvim"
+	use "wbthomason/packer.nvim"
 	use {
   		"nvim-neo-tree/neo-tree.nvim",
     	branch = "v3.x",
@@ -15,12 +15,19 @@ require('packer').startup(function()
       		"MunifTanjim/nui.nvim",
     	}
   	}
-	use {'neoclide/coc.nvim', branch = 'release'}
+	use {"neoclide/coc.nvim", branch = "release"}
+    use {
+        "nvim-treesitter/nvim-treesitter",
+        run = function()
+            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+            ts_update()
+        end,
+    }
 	use "vim-airline/vim-airline"
-	use "morhetz/gruvbox"
+	use "sainnhe/gruvbox-material"
 end)
 
-require('neo-tree').setup {
+require("neo-tree").setup {
 	filesystem = {
     		filtered_items = {
       			visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
@@ -30,7 +37,32 @@ require('neo-tree').setup {
 	}
 }
 
-vim.cmd.colorscheme("gruvbox")
+require("nvim-treesitter.configs").setup {
+	ensure_installed = { "c", "cpp", "python", "go", "nasm" },
+
+	auto_install = true,
+
+  	highlight = {
+		enable = true,
+		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+		-- Using this option may slow down your editor, and you may see some duplicate highlights.
+		-- Instead of true it can also be a list of languages
+		additional_vim_regex_highlighting = false,
+  	},
+}
+
+if vim.fn.has('termguicolors') == 1 then
+  vim.opt.termguicolors = true
+end
+
+vim.opt.background = "dark"
+
+vim.g.gruvbox_material_better_performance = 1
+
+vim.cmd("colorscheme gruvbox-material")
+
+vim.g.lightline = { colorscheme = 'gruvbox_material' }
 
 -- Your general Neovim settings
 vim.cmd [[
