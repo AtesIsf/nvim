@@ -6,16 +6,14 @@ local fn = vim.fn
 -- Initialize packer.nvim
 require('packer').startup(function()
 	use "wbthomason/packer.nvim"
-	use {
-  		"nvim-neo-tree/neo-tree.nvim",
-    	branch = "v3.x",
-    	requires = { 
-      		"nvim-lua/plenary.nvim",
-      		"nvim-tree/nvim-web-devicons", 
-      		"MunifTanjim/nui.nvim",
-    	}
-  	}
 	use {"neoclide/coc.nvim", branch = "release"}
+	use {
+  		'nvim-telescope/telescope.nvim', tag = '0.1.x',
+  		requires = { 
+			{'nvim-lua/plenary.nvim'},
+			{'nvim-tree/nvim-web-devicons'}
+		}
+	}
     use {
         "nvim-treesitter/nvim-treesitter",
         run = function()
@@ -27,15 +25,11 @@ require('packer').startup(function()
 	use "sainnhe/gruvbox-material"
 end)
 
-require("neo-tree").setup {
-	filesystem = {
-    		filtered_items = {
-      			visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
-      			hide_dotfiles = false,
-      			hide_gitignored = true,
-    		},
-	}
-}
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 require("nvim-treesitter.configs").setup {
 	ensure_installed = { "c", "cpp", "python", "go", "nasm" },
