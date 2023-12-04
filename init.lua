@@ -2,28 +2,30 @@ local vim = vim
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Initialize packer.nvim
-require('packer').startup(function()
-	use "wbthomason/packer.nvim"
-	use {"neoclide/coc.nvim", branch = "release"}
-	use {
-  		'nvim-telescope/telescope.nvim', tag = '0.1.x',
-  		requires = { 
-			{'nvim-lua/plenary.nvim'},
-			{'nvim-tree/nvim-web-devicons'}
-		}
-	}
-    use {
-        "nvim-treesitter/nvim-treesitter",
-        run = function()
-            local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-            ts_update()
-        end,
-    }
-	use "vim-airline/vim-airline"
-	use "sainnhe/gruvbox-material"
-end)
+require("lazy").setup({
+	{"neoclide/coc.nvim", branch = "release"},
+	{
+    		"nvim-telescope/telescope.nvim", branch = "0.1.x",
+      		dependencies = { "nvim-lua/plenary.nvim" }
+    },
+	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+	"nvim-tree/nvim-web-devicons",
+	"vim-airline/vim-airline",
+	"sainnhe/gruvbox-material",
+})
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -234,7 +236,7 @@ vim.api.nvim_create_user_command("OR", "call CocActionAsync('runCommand', 'edito
 -- Add (Neo)Vim's native statusline support
 -- NOTE: Please see `:h coc-status` for integrations with external plugins that
 -- provide custom statusline: lightline.vim, vim-airline
-vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
+-- vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
 
 -- Mappings for CoCList
 -- code actions and coc stuff
