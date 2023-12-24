@@ -18,12 +18,12 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	{"neoclide/coc.nvim", branch = "release"},
 	{
-    		"nvim-telescope/telescope.nvim", branch = "0.1.x",
-      		dependencies = { "nvim-lua/plenary.nvim" }
+    	"nvim-telescope/telescope.nvim", branch = "0.1.x",
+      	dependencies = { "nvim-lua/plenary.nvim" }
     },
 	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
 	"nvim-tree/nvim-web-devicons",
-	"vim-airline/vim-airline",
+	"nvim-lualine/lualine.nvim",
 	"sainnhe/gruvbox-material",
 })
 
@@ -58,7 +58,8 @@ vim.g.gruvbox_material_better_performance = 1
 
 vim.cmd("colorscheme gruvbox-material")
 
-vim.g.lightline = { colorscheme = 'gruvbox_material' }
+require('lualine').setup()
+options = { theme = 'gruvbox' }
 
 -- Your general Neovim settings
 vim.cmd [[
