@@ -25,6 +25,7 @@ require("lazy").setup({
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
 	"sainnhe/gruvbox-material",
+	"lervag/vimtex",
 })
 
 local builtin = require('telescope.builtin')
@@ -73,6 +74,11 @@ vim.cmd [[
   	set updatetime=300
   	set signcolumn=yes
 ]]
+
+-- Latex stuff
+vim.cmd("filetype plugin indent on")
+vim.cmd("syntax enable")
+vim.g.vimtex_view_method = "zathura"
 
 -- COC STUFF FROM HERE
 -- Some servers have issues with backup files, see #649
@@ -259,3 +265,4 @@ keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
 keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
 -- Resume latest coc list
 keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
+
