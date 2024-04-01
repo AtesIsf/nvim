@@ -73,6 +73,7 @@ vim.cmd [[
   	set nowritebackup
   	set updatetime=300
   	set signcolumn=yes
+	set mouse=
 ]]
 
 -- Latex stuff
