@@ -80,6 +80,12 @@ vim.cmd [[
 vim.cmd("filetype plugin indent on")
 vim.cmd("syntax enable")
 vim.g.vimtex_view_method = "zathura"
+vim.cmd[[
+	let g:vimtex_quickfix_ignore_filters = [
+      \ 'Underfull',
+      \ 'Overfull',
+      \]
+]]
 
 -- COC STUFF FROM HERE
 -- Some servers have issues with backup files, see #649
