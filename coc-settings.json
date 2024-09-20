@@ -1,15 +1,15 @@
 {
-  "languageserver": {
-    "go": {
-      "command": "gopls",
-      "rootPatterns": ["go.work", "go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true
-      }
-    }
-  },
-  "java.home": "/usr/lib/jvm/java-21-openjdk",
-  "java.configuration.updateBuildConfiguration": "interactive",
-  "java.errors.incompleteClasspath.severity": "ignore",
+	"languageserver": {
+		"go": {
+		  	"command": "gopls",
+			"rootPatterns": ["go.work", "go.mod", ".vim/", ".git/", ".hg/"],
+		  	"filetypes": ["go"],
+		  	"initializationOptions": {
+				"usePlaceholders": true
+			}
+		}
+	},
+	"java.home": "/usr/lib/jvm/java-21-openjdk",
+	"java.configuration.updateBuildConfiguration": "interactive",
+	"java.errors.incompleteClasspath.severity": "ignore",
 }
