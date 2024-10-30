@@ -25,7 +25,6 @@ require("lazy").setup({
 	"nvim-tree/nvim-web-devicons",
 	"nvim-lualine/lualine.nvim",
 	"sainnhe/gruvbox-material",
-	"lervag/vimtex",
 })
 
 local builtin = require('telescope.builtin')
@@ -74,17 +73,6 @@ vim.cmd [[
   	set updatetime=300
   	set signcolumn=yes
 	set mouse=
-]]
-
--- Latex stuff
-vim.cmd("filetype plugin indent on")
-vim.cmd("syntax enable")
-vim.g.vimtex_view_method = "zathura"
-vim.cmd[[
-	let g:vimtex_quickfix_ignore_filters = [
-      \ 'Underfull',
-      \ 'Overfull',
-      \]
 ]]
 
 -- COC STUFF FROM HERE
