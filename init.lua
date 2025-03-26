@@ -16,15 +16,15 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	{"neoclide/coc.nvim", branch = "release"},
-	{
-    	"nvim-telescope/telescope.nvim", branch = "0.1.x",
-      	dependencies = { "nvim-lua/plenary.nvim" }
-    },
-	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
-	"nvim-tree/nvim-web-devicons",
-	"nvim-lualine/lualine.nvim",
-	"sainnhe/gruvbox-material",
+  {"neoclide/coc.nvim", branch = "release"},
+  {
+    "nvim-telescope/telescope.nvim", branch = "0.1.x",
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
+  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+  "nvim-tree/nvim-web-devicons",
+  "nvim-lualine/lualine.nvim",
+  "sainnhe/gruvbox-material",
 })
 
 local builtin = require('telescope.builtin')
@@ -34,18 +34,18 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 require("nvim-treesitter.configs").setup {
-	ensure_installed = { "c", "cpp", "python", "go", "nasm" },
+  ensure_installed = { "c", "cpp", "python", "go", "nasm" },
 
-	auto_install = true,
+  auto_install = true,
 
-  	highlight = {
-		enable = true,
-		-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-		-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-		-- Using this option may slow down your editor, and you may see some duplicate highlights.
-		-- Instead of true it can also be a list of languages
-		additional_vim_regex_highlighting = false,
-  	},
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
 }
 
 if vim.fn.has('termguicolors') == 1 then
@@ -55,6 +55,8 @@ end
 vim.opt.background = "dark"
 
 vim.g.gruvbox_material_better_performance = 1
+-- vim.g.gruvbox_material_foreground = "mix"
+-- vim.g.gruvbox_material_foreground = "original"
 
 vim.cmd("colorscheme gruvbox-material")
 
@@ -63,19 +65,20 @@ options = { theme = 'gruvbox' }
 
 -- Your general Neovim settings
 vim.cmd [[
-  	set number
-  	set relativenumber
-  	set tabstop=4
-  	set shiftwidth=4
-	set softtabstop=-1
-	set expandtab
-	set smartindent
-  	set encoding=utf-8
-  	set nobackup
-  	set nowritebackup
-  	set updatetime=300
-  	set signcolumn=yes
-	set mouse=
+  set number
+  set relativenumber
+  set tabstop=2
+  set shiftwidth=2
+  set softtabstop=-1
+  set expandtab
+  set smartindent
+  set encoding=utf-8
+  set nobackup
+  set nowritebackup
+  set updatetime=300
+  set signcolumn=yes
+  set mouse=
+  set so=7
 ]]
 
 -- COC STUFF FROM HERE
@@ -94,8 +97,8 @@ vim.opt.signcolumn = "yes"
 local keyset = vim.keymap.set
 -- Autocomplete
 function _G.check_back_space()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
+  local col = vim.fn.col('.') - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
 end
 
 -- Use Tab for trigger completion with characters ahead and navigate
@@ -130,14 +133,14 @@ keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
 
 -- Use K to show documentation in preview window
 function _G.show_docs()
-    local cw = vim.fn.expand('<cword>')
-    if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
-        vim.api.nvim_command('h ' .. cw)
-    elseif vim.api.nvim_eval('coc#rpc#ready()') then
-        vim.fn.CocActionAsync('doHover')
-    else
-        vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
-    end
+  local cw = vim.fn.expand('<cword>')
+  if vim.fn.index({'vim', 'help'}, vim.bo.filetype) >= 0 then
+    vim.api.nvim_command('h ' .. cw)
+  elseif vim.api.nvim_eval('coc#rpc#ready()') then
+    vim.fn.CocActionAsync('doHover')
+  else
+    vim.api.nvim_command('!' .. vim.o.keywordprg .. ' ' .. cw)
+  end
 end
 keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 
@@ -145,9 +148,9 @@ keyset("n", "K", '<CMD>lua _G.show_docs()<CR>', {silent = true})
 -- Highlight the symbol and its references on a CursorHold event(cursor is idle)
 vim.api.nvim_create_augroup("CocGroup", {})
 vim.api.nvim_create_autocmd("CursorHold", {
-    group = "CocGroup",
-    command = "silent call CocActionAsync('highlight')",
-    desc = "Highlight symbol under cursor on CursorHold"
+  group = "CocGroup",
+  command = "silent call CocActionAsync('highlight')",
+  desc = "Highlight symbol under cursor on CursorHold"
 })
 
 
@@ -162,18 +165,18 @@ keyset("n", "<leader>f", "<Plug>(coc-format-selected)", {silent = true})
 
 -- Setup formatexpr specified filetype(s)
 vim.api.nvim_create_autocmd("FileType", {
-    group = "CocGroup",
-    pattern = "typescript,json",
-    command = "setl formatexpr=CocAction('formatSelected')",
-    desc = "Setup formatexpr specified filetype(s)."
+  group = "CocGroup",
+  pattern = "typescript,json",
+  command = "setl formatexpr=CocAction('formatSelected')",
+  desc = "Setup formatexpr specified filetype(s)."
 })
 
 -- Update signature help on jump placeholder
 vim.api.nvim_create_autocmd("User", {
-    group = "CocGroup",
-    pattern = "CocJumpPlaceholder",
-    command = "call CocActionAsync('showSignatureHelp')",
-    desc = "Update signature help on jump placeholder"
+  group = "CocGroup",
+  pattern = "CocJumpPlaceholder",
+  command = "call CocActionAsync('showSignatureHelp')",
+  desc = "Update signature help on jump placeholder"
 })
 
 -- Apply codeAction to the selected region
@@ -216,9 +219,9 @@ local opts = {silent = true, nowait = true, expr = true}
 keyset("n", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
 keyset("n", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
 keyset("i", "<C-f>",
-       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
+'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', opts)
 keyset("i", "<C-b>",
-       'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
+'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', opts)
 keyset("v", "<C-f>", 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', opts)
 keyset("v", "<C-b>", 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', opts)
 
