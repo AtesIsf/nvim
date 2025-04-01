@@ -85,6 +85,7 @@ vim.cmd [[
   set relativenumber
   set tabstop=2
   set shiftwidth=2
+  set expandtab
   set softtabstop=-1
   set smartindent
   set encoding=utf-8
