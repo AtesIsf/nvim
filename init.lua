@@ -152,7 +152,12 @@ cmp.setup({
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       else
-        fallback()
+        -- Fall back to normal indentation
+        vim.api.nvim_feedkeys(
+          vim.api.nvim_replace_termcodes('<Tab>', true, true, true),
+          'n',
+          false
+        )
       end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
