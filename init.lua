@@ -101,7 +101,7 @@ local on_attach = function(client, bufnr)
   -- Keybindings
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', function()
+  vim.keymap.set('n', '<leader>k', function()
   vim.lsp.buf.hover({
     border = "rounded",
   })
