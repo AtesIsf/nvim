@@ -113,6 +113,16 @@ end
 require'lspconfig'.clangd.setup({ on_attach = on_attach })
 require'lspconfig'.rust_analyzer.setup({ on_attach = on_attach })
 require'lspconfig'.pyright.setup({ on_attach = on_attach })
+require'lspconfig'.gopls.setup({ on_attach = on_attach })
+
+-- Diagnostic configuration
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+})
 
 -- Autocompletion setup
 local cmp = require('cmp')
