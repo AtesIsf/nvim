@@ -117,7 +117,7 @@ end
 require'lspconfig'.clangd.setup({ on_attach = on_attach })
 require'lspconfig'.rust_analyzer.setup({ on_attach = on_attach })
 require'lspconfig'.pyright.setup({ on_attach = on_attach })
-require'lspconfig'.gopls.setup({ on_attach = on_attach })
+require'lspconfig'.html.setup({ on_attach = on_attach })
 
 -- Show diagnostics in floating window
 vim.keymap.set('n', '<leader>d', function()
