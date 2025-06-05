@@ -101,11 +101,20 @@ local on_attach = function(client, bufnr)
   -- Keybindings
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', '<leader>k', function()
-  vim.lsp.buf.hover({
-    border = "rounded",
-  })
+  vim.keymap.set('n', '<leader>K', function()
+    vim.lsp.buf.hover({
+      border = "rounded",
+    })
   end, opts)
+  -- Show diagnostics in floating window
+  vim.keymap.set('n', '<leader>d', function()
+    vim.diagnostic.open_float({ 
+      scope = "cursor",
+      border = "rounded",
+      focusable = false,
+    })
+  end, { desc = "Show diagnostic message" })
+
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
@@ -118,15 +127,6 @@ require'lspconfig'.clangd.setup({ on_attach = on_attach })
 require'lspconfig'.rust_analyzer.setup({ on_attach = on_attach })
 require'lspconfig'.pyright.setup({ on_attach = on_attach })
 require'lspconfig'.html.setup({ on_attach = on_attach })
-
--- Show diagnostics in floating window
-vim.keymap.set('n', '<leader>d', function()
-  vim.diagnostic.open_float({ 
-    scope = "cursor",
-    border = "rounded",
-    focusable = false,
-  })
-end, { desc = "Show diagnostic message" })
 
 -- Autocompletion setup
 local cmp = require('cmp')
