@@ -97,6 +97,7 @@ vim.cmd [[
 -- LSP Client stuff
 local on_attach = function(client, bufnr)
   local opts = { buffer = bufnr, silent = true }
+  client.server_capabilities.completionProvider = nil
 
   -- Keybindings
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
