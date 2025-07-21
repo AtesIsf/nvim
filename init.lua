@@ -15,7 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   "neovim/nvim-lspconfig",
 	"williamboman/mason.nvim",
-	"williamboman/mason-lspconfig.nvim",
 	"hrsh7th/nvim-cmp",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
@@ -74,11 +73,6 @@ vim.cmd("colorscheme gruvbox-material")
 require('lualine').setup()
 options = { theme = 'gruvbox' }
 
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "clangd", "rust_analyzer", "pyright" }
-})
-
 -- Your general Neovim settings
 vim.cmd [[
   set number
@@ -123,11 +117,14 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 end
 
+require("mason").setup()
+
 -- Setup LSP servers
 require'lspconfig'.clangd.setup({ on_attach = on_attach })
 require'lspconfig'.rust_analyzer.setup({ on_attach = on_attach })
-require'lspconfig'.pyright.setup({ on_attach = on_attach })
 require'lspconfig'.html.setup({ on_attach = on_attach })
+require'lspconfig'.basedpyright.setup({ on_attach = on_attach })
+require'lspconfig'.gopls.setup({ on_attach = on_attach })
 
 -- Autocompletion setup
 local cmp = require('cmp')
