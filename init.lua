@@ -121,9 +121,10 @@ require("mason").setup()
 -- Setup LSP servers
 require'lspconfig'.clangd.setup({ on_attach = on_attach })
 require'lspconfig'.rust_analyzer.setup({ on_attach = on_attach })
-require'lspconfig'.html.setup({ on_attach = on_attach })
 require'lspconfig'.basedpyright.setup({ on_attach = on_attach })
 require'lspconfig'.gopls.setup({ on_attach = on_attach })
+require'lspconfig'.htmx.setup({ on_attach = on_attach })
+require'lspconfig'.html.setup({ on_attach = on_attach })
 
 -- Autocompletion setup
 local cmp = require('cmp')
