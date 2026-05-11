@@ -35,7 +35,7 @@ require("lazy").setup({
 	},
   "nvim-tree/nvim-web-devicons",
   "nvim-lualine/lualine.nvim",
-  "sainnhe/gruvbox-material",
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 })
 
 local builtin = require('telescope.builtin')
@@ -49,10 +49,6 @@ if vim.fn.has('termguicolors') == 1 then
 end
 
 vim.opt.background = "dark"
-
-vim.g.gruvbox_material_better_performance = 1
--- vim.g.gruvbox_material_foreground = "mix"
--- vim.g.gruvbox_material_foreground = "original"
 
 require'nvim-treesitter.configs'.setup {
   auto_install = false,
@@ -68,10 +64,10 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-vim.cmd("colorscheme gruvbox-material")
+vim.cmd("colorscheme catppuccin-mocha")
 
 require('lualine').setup()
-options = { theme = 'gruvbox' }
+options = { theme = 'catpuccin' }
 
 -- Your general Neovim settings
 vim.cmd [[
