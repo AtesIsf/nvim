@@ -82,6 +82,7 @@ vim.cmd [[
   set signcolumn=yes
   set mouse=
   set so=7
+  set colorcolumn=80
 ]]
 
 -- LSP Client stuff
