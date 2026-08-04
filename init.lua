@@ -21,9 +21,9 @@ require("lazy").setup({
   "hrsh7th/cmp-path",
   "L3MON4D3/LuaSnip",
   "saadparwaiz1/cmp_luasnip",
-	"nvim-treesitter/nvim-treesitter",
+	{ "nvim-treesitter/nvim-treesitter", lazy = false, build = ":TSUpdate" },
   {
-    "nvim-telescope/telescope.nvim", branch = "0.1.x",
+    "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" }
   },
 	{
@@ -35,7 +35,17 @@ require("lazy").setup({
 	},
   "nvim-tree/nvim-web-devicons",
   "nvim-lualine/lualine.nvim",
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  {
+    "AtesIsf/syringe.nvim",
+    config = function()
+      require("syringe").setup({
+        cmd = "agy",
+        timeout = 120000,
+        default_keymaps = true,
+      })
+    end
+  }
 })
 
 local builtin = require('telescope.builtin')
@@ -50,19 +60,16 @@ end
 
 vim.opt.background = "dark"
 
-require'nvim-treesitter.configs'.setup {
-  auto_install = false,
+-- Install treesitter parsers (runs async; no-op if already installed)
+require('nvim-treesitter').install { 'c', 'python', 'bash', 'rust' }
 
-  highlight = {
-		ensure_installed = { "c", "python", "bash", "rust" },
-		enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+-- Enable treesitter highlighting for filetypes with installed parsers
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function()
+    -- pcall so it silently skips filetypes without a parser
+    pcall(vim.treesitter.start)
+  end,
+})
 
 vim.cmd("colorscheme catppuccin-mocha")
 
@@ -85,43 +92,41 @@ vim.cmd [[
   set colorcolumn=80
 ]]
 
--- LSP Client stuff
-local on_attach = function(client, bufnr)
-  local opts = { buffer = bufnr, silent = true }
+-- LSP keymaps (set when a server attaches to a buffer)
+-- Note: Neovim 0.12 provides these defaults: gd, gD, grn, grr, gri, gra, gO, Ctrl-S
+-- We only add custom keymaps here.
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local opts = { buffer = ev.buf, silent = true }
 
-  -- Keybindings
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', '<leader>K', function()
-    vim.lsp.buf.hover({
-      border = "rounded",
-    })
-  end, opts)
-  -- Show diagnostics in floating window
-  vim.keymap.set('n', '<leader>d', function()
-    vim.diagnostic.open_float({ 
-      scope = "cursor",
-      border = "rounded",
-      focusable = false,
-    })
-  end, { desc = "Show diagnostic message" })
+    vim.keymap.set('n', '<leader>K', function()
+      vim.lsp.buf.hover({
+        border = "rounded",
+      })
+    end, opts)
 
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-end
+    vim.keymap.set('n', '<leader>d', function()
+      vim.diagnostic.open_float({
+        scope = "cursor",
+        border = "rounded",
+        focusable = false,
+      })
+    end, vim.tbl_extend('force', opts, { desc = "Show diagnostic message" }))
+
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+  end,
+})
 
 require("mason").setup()
 
--- Setup LSP servers
-require'lspconfig'.clangd.setup({ on_attach = on_attach })
-require'lspconfig'.rust_analyzer.setup({ on_attach = on_attach })
-require'lspconfig'.basedpyright.setup({ on_attach = on_attach })
-require'lspconfig'.gopls.setup({ on_attach = on_attach })
-require'lspconfig'.htmx.setup({ on_attach = on_attach })
-require'lspconfig'.html.setup({ on_attach = on_attach })
+-- Enable LSP servers (configs provided by nvim-lspconfig)
+vim.lsp.enable('clangd')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('basedpyright')
+vim.lsp.enable('gopls')
+vim.lsp.enable('htmx')
+vim.lsp.enable('html')
 
 -- Autocompletion setup
 local cmp = require('cmp')
