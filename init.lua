@@ -34,7 +34,7 @@ require("lazy").setup({
     },
     "nvim-tree/nvim-web-devicons",
     "nvim-lualine/lualine.nvim",
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    { "shaunsingh/nord.nvim", lazy = false, priority = 1000 },
     {
         "AtesIsf/syringe.nvim",
         config = function()
@@ -70,10 +70,11 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
-vim.cmd("colorscheme catppuccin-mocha")
+vim.cmd("colorscheme nord")
 
-require('lualine').setup()
-options = { theme = 'catpuccin' }
+require('lualine').setup({
+    options = { theme = 'nord' }
+})
 
 -- Your general Neovim settings
 vim.cmd [[
